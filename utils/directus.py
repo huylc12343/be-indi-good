@@ -48,7 +48,31 @@ def create_order_item(payload: dict):
         raise HTTPException(status_code=res.status_code, detail=res.text)
     return res.json()["data"]
 
+def get_product(merch_id: str):
+    res = requests.get(
+        f"{DIRECTUS_URL}/items/merch/{merch_id}",
+        headers=DIRECTUS_HEADERS,
+    )
+    res.raise_for_status()
+    return res.json()["data"]
+def get_products_by_ids(merch_ids: list):
+    if not merch_ids:
+        return {}
 
+    res = requests.get(
+        f"{DIRECTUS_URL}/items/merch",
+        headers=DIRECTUS_HEADERS,
+        params={
+            "filter[id][_in]": ",".join(map(str, merch_ids)),
+            "fields": "*",
+        }
+    )
+
+    res.raise_for_status()
+    data = res.json().get("data", [])
+
+    # convert thành dict cho dễ lookup
+    return {item["id"]: item for item in data}
 def get_order(order_id: str):
     res = requests.get(
         f"{DIRECTUS_URL}/items/merch_orders/{order_id}",

@@ -274,6 +274,27 @@ def payos_webhook():
         print(f"🎉 ORDER {order_id} UPDATED TO PAID")
 
         # =========================
+        # 7.1 SEND EMAIL (🔥 ADD THIS)
+        # =========================
+        try:
+            from jobs.send_order_email import send_order_email
+            print(f"📧 Enqueuing email job for order {order_id}")
+            # dùng queue để tránh block webhook
+            # q.enqueue(send_order_email, order_id)
+            try:
+                from jobs.send_order_email import send_order_email
+                send_order_email(order_id)
+                print(f"📧 Email sent for order {order_id}")
+            except Exception as e:
+                import traceback
+                print(f"❌ Failed to send email: {e}")
+                traceback.print_exc()  # ← thêm dòng này để thấy full lỗi
+
+            
+        except Exception as e:
+            print(f"❌ Failed to enqueue email job: {e}")
+
+        # =========================
         # 8. REALTIME SOCKET
         # =========================
         socketio.emit(
@@ -304,7 +325,11 @@ def _cancel_expire_job(order_id: str):
         except Exception:
             pass
         redis_conn.delete(job_id_key)
+from flask import send_from_directory
 
+@app.route('/img/<path:filename>')
+def serve_images(filename):
+    return send_from_directory('static/img', filename)
 
 @socketio.on("join_order")
 def on_join_order(data):
