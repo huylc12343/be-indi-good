@@ -104,15 +104,15 @@ def create_order_route():
             for item in order_items
         )
 
+        from utils.validate import _calc_code_discount
+
         discount = 0
         discount_code_value = body.get("discount_code")
+
         if discount_code_value:
             discount_code = get_discount_code_by_code(discount_code_value)
             if discount_code:
-                if discount_code["type"] == "fixed":
-                    discount = float(discount_code["value"])
-                elif discount_code["type"] == "percent":
-                    discount = subtotal * float(discount_code["value"]) / 100
+                discount = float(_calc_code_discount(discount_code, subtotal))
 
         total = max(0, subtotal + shipping_fee - discount)
 

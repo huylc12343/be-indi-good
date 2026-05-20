@@ -115,6 +115,7 @@ def cancel_order(order_id: str):
 
 
 def get_discount_code_by_code(code: str):
+    code = code.strip().lower()
     res = requests.get(
         f"{DIRECTUS_URL}/items/discount_codes",
         headers=DIRECTUS_HEADERS,
