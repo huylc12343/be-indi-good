@@ -32,18 +32,33 @@ def _build_order_items_html(order_items: list, products_map: dict) -> str:
         product = products_map.get(merch_id, {})
         product_name = product.get("name") or product.get("title") or "Sản phẩm"
 
+        # Build variant suffix: tên_type_color_size nếu có
+        variants = []
+        if item.get("selected_type"):
+            variants.append(item["selected_type"])
+        if item.get("selected_color"):
+            variants.append(item["selected_color"])
+        if item.get("selected_size"):
+            variants.append(item["selected_size"])
+
+        display_name = "_".join([product_name] + variants) if variants else product_name
+
         rows += f"""
-        <tr>
-          <td style="padding: 10px 0; font-size: 13px; color: #333;">
-            <b>{qty:02d} x</b> {product_name}
-          </td>
-        </tr>
+        <div style="
+            font-size: 14px;
+            color: #333;
+            line-height: 20px;
+            margin-bottom: 4px;
+        ">
+            <span style="display:inline-block; width: 40px;">
+                {qty:02d} x
+            </span>
+            <span>{display_name}</span>
+        </div>
         """
 
-    return rows or """
-        <tr><td style="color:#999;">Không có sản phẩm</td></tr>
-    """
-    
+    return rows or "<div>Không có sản phẩm</div>"
+
 def _build_email_html(order: dict) -> str:
     from utils.directus import get_products_by_ids
 

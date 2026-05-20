@@ -83,6 +83,8 @@ def create_order_route():
         return jsonify({"error": "Too many requests"}), 429
 
     body = request.get_json()
+    if "discount_code_id" in body and "discount_code" not in body:
+        body["discount_code"] = body.pop("discount_code_id")
     if not body:
         return jsonify({"error": "Missing request body"}), 400
 
