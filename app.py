@@ -133,6 +133,7 @@ def create_order_route():
 
         order = create_order(body)
         order_id = order["id"]
+        order["expires_at"] = expires_at.isoformat()
 
         created_items = []
         for item in order_items:
@@ -282,10 +283,11 @@ def payos_webhook():
             from jobs.send_order_email import send_order_email
             print(f"📧 Enqueuing email job for order {order_id}")
             # dùng queue để tránh block webhook
-            # q.enqueue(send_order_email, order_id)
             try:
                 from jobs.send_order_email import send_order_email
-                send_order_email(order_id)
+                # send_order_email(order_id)
+                q.enqueue(send_order_email, order_id)
+                
                 print(f"📧 Email sent for order {order_id}")
             except Exception as e:
                 import traceback

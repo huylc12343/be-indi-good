@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>(Pre-order thành công) Merch “In-đỉ In-đi T6/2026”</title>
+    <title>Xác nhận pre-order thành công</title>
   </head>
   <body
     style="
@@ -67,7 +67,7 @@
                               font-family: Arial, sans-serif;
                             "
                           >
-                            <div style="color: #333333; font-size: 16px; font-family: Arial, sans-serif; font-weight: 700; line-height: 24px; mso-line-height-rule: exactly; margin-bottom: 4px;">In-đỉ In-đi - Indie music fest</div>
+                            <div style="color: #333333; font-size: 16px; font-family: Arial, sans-serif; font-weight: 700; line-height: 24px; mso-line-height-rule: exactly; margin-bottom: 4px;">In-đỉ In-đi • Indie Music Fest</div>
                             <!-- <img
                               src="$BASE_URL/success-text.png"
                               alt="xác nhận preorder thành công"
@@ -80,7 +80,7 @@
                                 height: auto;
                               "
                             /> -->
-                            <h1 style="color: #ff017e;">(Pre-order thành công) Merch “In-đỉ In-đi T6/2026”</h1>
+                            <h1 style="color: #ff017e;">Xác nhận pre-order thành công</h1>
                           </td>
                         </tr>
                       </table>
@@ -127,7 +127,7 @@
                                 line-height: 20px;
                                 mso-line-height-rule: exactly;
                               "
-                              >Cảm ơn bạn đã đồng hành cùng chúng mình!<br /><br /> In-đỉ In-đi xác nhận bạn pre-order thành công Merch tháng 6/2026 của In-đỉ In-đi, đơn hàng dự kiến sẽ được bắt đầu ship từ ngày 13/6. Bạn theo dõi fanpage để nhận thông báo mới nhất nha
+                              >Cảm ơn bạn đã đồng hành cùng chúng mình!<br /><br /> In-đỉ In-đi xác nhận bạn pre-order thành công <b>Merch tháng 6/2026</b> của In-đỉ In-đi, đơn hàng dự kiến sẽ được bắt đầu ship từ ngày <b>13/6</b>. Bạn theo dõi fanpage để nhận thông báo mới nhất nha
                           </td>
                         </tr>
                       </table>
@@ -156,6 +156,61 @@
                             $order_items
                           </td>                    
                         </tr>
+                                                        <tr>
+                                  <td colspan="2" style="padding:8px 0;">
+                                    <hr style="border:none; border-top:1px solid #eee;" />
+                                  </td>
+                                </tr>
+
+                          <!-- PAYMENT SUMMARY -->
+                          <tr>
+                            <td colspan="2" style="padding-top:16px;">
+                              <table width="100%" cellpadding="0" cellspacing="0">
+                                
+                                <tr>
+                                  <td style="font-size:14px; color:#333;">Tạm tính</td>
+                                  <td align="right" style="font-size:14px; color:#333;">
+                                    $subtotal
+                                  </td>
+                                </tr>
+
+                                <tr>
+                                  <td style="font-size:14px; color:#333;">Giảm giá</td>
+                                  <td align="right" style="font-size:14px; color:#ff017e;">
+                                    - $discount
+                                  </td>
+                                </tr>
+
+                                <tr>
+                                  <td style="font-size:14px; color:#333;">Phí vận chuyển</td>
+                                  <td align="right" style="font-size:14px; color:#333;">
+                                    $shipping_fee
+                                  </td>
+                                </tr>
+
+                                <tr>
+                                  <td colspan="2" style="padding:8px 0;">
+                                    <hr style="border:none; border-top:1px solid #eee;" />
+                                  </td>
+                                </tr>
+
+                                <tr>
+                                  <td style="font-size:16px; font-weight:700; color:#333;">
+                                    Tổng thanh toán
+                                  </td>
+                                  <td align="right" style="font-size:16px; font-weight:700; color:#ff017e;">
+                                    $total
+                                  </td>
+                                </tr>
+
+                              </table>
+                            </td>
+                          </tr>
+                                                          <tr>
+                                  <td colspan="2" style="padding:8px 0;">
+                                    <hr style="border:none; border-top:1px solid #eee;" />
+                                  </td>
+                                </tr>
 
                         <tr>
                           <td>Dự kiến ship</td>
@@ -164,12 +219,12 @@
                         
                         <tr style="border-top:solid 1px #333333 ;">
                           <td>Phương thức nhận hàng</td>
-                          <td>Nhận qua ship</td>
+                          <td>$shipping_method</td>
                         </tr>
                         
                         <tr>
-                          <td>Địa chỉ nhận hàng(TH Nhận qua ship)</td>
-                          <td>49 ngô gia tự, hcm</td>
+                          <td>Địa chỉ nhận hàng</td>
+                          <td>$customer_address</td>
                         </tr>
                       </table>
 
@@ -256,6 +311,8 @@
                             style="
                               padding-bottom: 16px;
                               font-family: Arial, sans-serif;
+                                text-align: center;
+
                             "
                           >
                             <span
@@ -263,12 +320,13 @@
                                 color: #333333;
                                 font-size: 14px;
                                 font-family: Arial, sans-serif;
-                                font-weight: 700;
+                                font-weight: 400;
                                 line-height: 20px;
-                                mso-line-height-rule: exactly;
+                                font-style: italic;
+                                mso-line-height-rule: exactly; 
                               "
-                              >Một lần nữa, cảm ơn bạn đã trở thành một phần của
-                              câu chuyện cổ tích này! Hẹn sớm gặp lại bạn!</span
+                              >“Một lần nữa, cảm ơn bạn đã trở thành một phần của
+                              câu chuyện cổ tích này!”</span
                             >
                           </td>
                         </tr>
@@ -278,6 +336,8 @@
                             style="
                               padding-bottom: 40px;
                               font-family: Arial, sans-serif;
+                                text-align: center;
+
                             "
                           >
                             <span
@@ -307,232 +367,21 @@
                   bgcolor="#333333"
                 >
                   <tr>
-                    <td
-                      valign="top"
-                      style="padding: 16px; font-family: Arial, sans-serif"
-                    >
-                      <!-- Logo căn giữa -->
-                      <table
-                        border="0"
-                        cellpadding="0"
-                        cellspacing="0"
-                        width="100%"
-                      >
-                        <tr>
-                          <td
-                            valign="top"
-                            align="center"
-                            style="padding-bottom: 12px; text-align: center"
-                          >
-                            <!-- <img
-                              alt="In-đỉ In-đi"
-                              src="$BASE_URL/logo-color.png"
-                              width="105"
-                              height="auto"
-                              border="0"
-                              style="display: inline-block; height: auto"
-                            /> -->
-                          </td>
-                        </tr>
-                      </table>
+
 
                       <!-- 2 cột: Event info + Contact -->
-                      <table
-                        border="0"
-                        cellpadding="0"
-                        cellspacing="0"
-                        width="100%"
-                      >
-                        <tr>
-                          <td
-                            valign="top"
-                            width="50%"
-                            style="padding-right: 12px"
-                          >
-                            <table
-                              border="0"
-                              cellpadding="0"
-                              cellspacing="0"
-                              width="100%"
-                            >
-                              <tr>
-                                <td valign="top" style="padding-bottom: 8px">
-                                  <span
-                                    style="
-                                      color: #ff017e;
-                                      font-size: 12px;
-                                      font-family: Arial, sans-serif;
-                                      font-weight: 700;
-                                      line-height: 16px;
-                                      mso-line-height-rule: exactly;
-                                    "
-                                    >In-đỉ In-đi Show 2026</span
-                                  >
-                                </td>
-                              </tr>
-                              <tr>
-                                <td valign="top" style="padding-bottom: 4px">
-                                  <img
-                                    alt=""
-                                    src="$BASE_URL/Clock.png"
-                                    width="14"
-                                    height="14"
-                                    border="0"
-                                    style="
-                                      vertical-align: middle;
-                                      margin-right: 4px;
-                                      display: inline;
-                                    "
-                                  />
-                                  <span
-                                    style="
-                                      color: #ffffff;
-                                      font-size: 10px;
-                                      font-family: Arial, sans-serif;
-                                      line-height: 16px;
-                                      mso-line-height-rule: exactly;
-                                      vertical-align: middle;
-                                    "
-                                    >17:00 | 20.06.2026</span
-                                  >
-                                </td>
-                              </tr>
-                              <tr>
-                                <td valign="top">
-                                  <img
-                                    alt=""
-                                    src="$BASE_URL/MapPin.png"
-                                    width="14"
-                                    height="14"
-                                    border="0"
-                                    style="
-                                      vertical-align: top;
-                                      margin-right: 4px;
-                                      display: inline;
-                                    "
-                                  />
-                                  <span
-                                    style="
-                                      color: #ffffff;
-                                      font-size: 10px;
-                                      font-family: Arial, sans-serif;
-                                      line-height: 16px;
-                                      mso-line-height-rule: exactly;
-                                    "
-                                    >Cổng Nối - Số 2 Trịnh Công Sơn, Tây Hồ, Hà
-                                    Nội</span
-                                  >
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-                          <td valign="top" width="50%">
-                            <table
-                              border="0"
-                              cellpadding="0"
-                              cellspacing="0"
-                              width="100%"
-                            >
-                              <tr>
-                                <td valign="top" style="padding-bottom: 8px">
-                                  <span
-                                    style="
-                                      color: #ff017e;
-                                      font-size: 12px;
-                                      font-family: Arial, sans-serif;
-                                      font-weight: 700;
-                                      line-height: 16px;
-                                      mso-line-height-rule: exactly;
-                                    "
-                                    >Mọi thắc mắc xin liên hệ:</span
-                                  >
-                                </td>
-                              </tr>
-                              <tr>
-                                <td valign="top" style="padding-bottom: 4px">
-                                  <img
-                                    alt=""
-                                    src="$BASE_URL/Phone.png"
-                                    width="14"
-                                    height="14"
-                                    border="0"
-                                    style="
-                                      vertical-align: middle;
-                                      margin-right: 4px;
-                                      display: inline;
-                                    "
-                                  />
-                                  <span
-                                    style="
-                                      color: #ffffff;
-                                      font-size: 10px;
-                                      font-family: Arial, sans-serif;
-                                      line-height: 16px;
-                                      mso-line-height-rule: exactly;
-                                      vertical-align: middle;
-                                    "
-                                    >0968023065 (Trần Thị Hải Yến)</span
-                                  >
-                                </td>
-                              </tr>
-                              <tr>
-                                <td valign="top" style="padding-bottom: 4px">
-                                  <img
-                                    alt=""
-                                    src="$BASE_URL/FacebookLogo.png"
-                                    width="14"
-                                    height="14"
-                                    border="0"
-                                    style="
-                                      vertical-align: middle;
-                                      margin-right: 4px;
-                                      display: inline;
-                                    "
-                                  />
-                                  <span
-                                    style="
-                                      color: #ffffff;
-                                      font-size: 10px;
-                                      font-family: Arial, sans-serif;
-                                      line-height: 16px;
-                                      mso-line-height-rule: exactly;
-                                      vertical-align: middle;
-                                    "
-                                    >In-đỉ In-đi</span
-                                  >
-                                </td>
-                              </tr>
-                              <tr>
-                                <td valign="top">
-                                  <img
-                                    alt=""
-                                    src="$BASE_URL/Envelope.png"
-                                    width="14"
-                                    height="14"
-                                    border="0"
-                                    style="
-                                      vertical-align: middle;
-                                      margin-right: 4px;
-                                      display: inline;
-                                    "
-                                  />
-                                  <span
-                                    style="
-                                      color: #ffffff;
-                                      font-size: 10px;
-                                      font-family: Arial, sans-serif;
-                                      line-height: 16px;
-                                      mso-line-height-rule: exactly;
-                                      vertical-align: middle;
-                                    "
-                                    >ticket.indi.indi.show@gmail.com</span
-                                  >
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-                        </tr>
-                      </table>
+                                  <tr>
+                      <td valign="top" style="padding: 0; font-size: 0; line-height: 0">
+                        <img
+                          alt="In-đỉ In-đi"
+                          src="https://directus.indiindishow.com/assets/fed2a57d-0d1e-406f-937c-c5e1eb77a9f7"
+                          width="600"
+                          height="auto"
+                          style="display: block; width: 100%; height: auto"
+                          border="0"
+                        />
+                      </td>
+                    </tr>
                     </td>
                   </tr>
                 </table>

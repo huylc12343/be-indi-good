@@ -41,7 +41,7 @@ def _build_order_items_html(order_items: list, products_map: dict) -> str:
         if item.get("selected_size"):
             variants.append(item["selected_size"])
 
-        display_name = "_".join([product_name] + variants) if variants else product_name
+        display_name = "-".join([product_name] + variants) if variants else product_name
 
         rows += f"""
         <div style="
@@ -65,11 +65,23 @@ def _build_email_html(order: dict) -> str:
     customer_name = order.get("customer_name", "")
     customer_email = order.get("customer_email", "")
     customer_phone = order.get("customer_phone", "")
-    customer_address = order.get("customer_address", "") or order.get("shipping_address", "")
-    shipping_method = order.get("shipping_method", "")
+    # ✅ FIX: khai báo shipping_method_raw TRƯỚC khi dùng
+    shipping_method_raw = order.get("shipping_method")
+    if not shipping_method_raw:
+        shipping_method_raw = _detect_shipping_method(order)
+    shipping_method = _format_shipping_method(shipping_method_raw)
+    customer_address = ""
+
+    if shipping_method_raw == "shipping":
+        customer_address = order.get("customer_address") or order.get("shipping_address", "")
+
 
     subtotal = _format_currency(order.get("subtotal", 0))
-    discount = _format_currency(order.get("discount", 0))
+    discount_combo = float(order.get("discount_combo") or 0)
+    discount_code = float(order.get("discount_code_amount") or 0)
+
+    discount_total = discount_combo + discount_code
+    discount = _format_currency(discount_total)
     shipping_fee = _format_currency(order.get("shipping_fee", 0))
     total = _format_currency(order.get("total", 0))
 
@@ -99,12 +111,21 @@ def _build_email_html(order: dict) -> str:
         customer_address=customer_address,
         shipping_method=shipping_method,
         subtotal=subtotal,
-        discount=subtotal,
+        discount=discount,
         shipping_fee=shipping_fee,
         total=total,
         order_items=order_items_html,
     )
-
+def _detect_shipping_method(order: dict) -> str:
+    if float(order.get("shipping_fee", 0)) > 0:
+        return "shipping"
+    return "pickup"
+def _format_shipping_method(method: str) -> str:
+    if method == "shipping":
+        return "Giao hàng tận nơi"
+    elif method == "pickup":
+        return "Nhận tại sự kiện/ nhận tại bụi rock"
+    return "Không xác định"
 def send_order_email(order_id: str):
     import requests
     from utils.config import DIRECTUS_URL, DIRECTUS_TOKEN
