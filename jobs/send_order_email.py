@@ -66,15 +66,11 @@ def _build_email_html(order: dict) -> str:
     customer_email = order.get("customer_email", "")
     customer_phone = order.get("customer_phone", "")
     # ✅ FIX: khai báo shipping_method_raw TRƯỚC khi dùng
-    shipping_method_raw = order.get("shipping_method")
-    if not shipping_method_raw:
-        shipping_method_raw = _detect_shipping_method(order)
+    shipping_method_raw = order.get("shipping_method") or _detect_shipping_method(order)
     shipping_method = _format_shipping_method(shipping_method_raw)
-    customer_address = ""
 
-    if shipping_method_raw == "shipping":
-        customer_address = order.get("customer_address") or order.get("shipping_address", "")
-
+    # ✅ luôn lấy address (áp dụng cho cả shipping + pickup)
+    customer_address = order.get("customer_address") or order.get("shipping_address", "")
 
     subtotal = _format_currency(order.get("subtotal", 0))
     discount_combo = float(order.get("discount_combo") or 0)
@@ -87,7 +83,7 @@ def _build_email_html(order: dict) -> str:
 
     order_items = order.get("order_items", [])  # ← đổi merch_order_items → order_items
     # print("ORDER ITEMS:", order_items)  # ← xem structure thực tế
-
+    print("CUSTOMER ADDRESS:", customer_address)  # ← xem field nào có address
     merch_ids = [
         item.get("merch") or item.get("merch_id")
         for item in order_items
@@ -144,6 +140,8 @@ def send_order_email(order_id: str):
     order = res.json().get("data")
     # print("ALL ORDER KEYS:", list(order.keys()))
     # print("RAW ORDER:", order)  # xem full data
+    print("FETCHED ORDER:", order)
+    print("FETCHED customer_address:", order.get("customer_address"))
     if not order:
         logger.error(f"send_order_email: order {order_id} not found")
         return

@@ -1,5 +1,6 @@
 # utils/validate.py
 import re
+import json
 import math
 from utils.directus import get_discount_code_by_code
 
@@ -20,7 +21,8 @@ def validate_phone(phone: str) -> str | None:
 
 
 def validate_order(body: dict) -> str | None:
-    print("DEBUG FULL BODY:", body)  # ← thêm dòng này
+    print("DEBUG FULL BODY:")  # ← thêm dòng này
+    print(json.dumps(body, indent=2, ensure_ascii=False))
     print("DEBUG discount_code field:", repr(body.get("discount_code")))
     print("DEBUG discount_code_amount field:", repr(body.get("discount_code_amount")))
     # ✅ Email
@@ -66,13 +68,12 @@ def validate_order(body: dict) -> str | None:
             return "Giá sản phẩm không hợp lệ"
 
         try:
-            item_subtotal = float(item.get("subtotal", 0))
+            item_subtotal = unit_price * quantity
         except (TypeError, ValueError):
             return "subtotal item phải là số"
 
         expected_item_subtotal = unit_price * quantity
-        if not math.isclose(item_subtotal, expected_item_subtotal, rel_tol=1e-9):
-            return f"Subtotal item không hợp lệ, expected {expected_item_subtotal}"
+
 
         # ✅ variant fields (optional)
         for field in ["selected_type", "selected_color", "selected_size"]:
@@ -102,8 +103,11 @@ def validate_order(body: dict) -> str | None:
 
     # ✅ discount code
     discount_code_amount = 0.0
-    discount_code_value = body.get("discount_code") or body.get("discount_code_id")
-    print(f"debug body = {body}")
+    discount_code_value = body.get("discount_code")
+    discount_code_id = body.get("discount_code_id")
+    print(f"debug body: ")
+    print(json.dumps(body, indent=2, ensure_ascii=False))
+
     print(f"DEBUG discount_code_value={repr(discount_code_value)}")
     if discount_code_value:
         discount_code = get_discount_code_by_code(discount_code_value)

@@ -1,6 +1,6 @@
 from gevent import monkey
 monkey.patch_all()
-
+import json
 import os
 from datetime import datetime, timezone, timedelta
 from flask import Flask, jsonify, request
@@ -83,8 +83,9 @@ def create_order_route():
         return jsonify({"error": "Too many requests"}), 429
 
     body = request.get_json()
-    if "discount_code_id" in body and "discount_code" not in body:
-        body["discount_code"] = body.pop("discount_code_id")
+    print(json.dumps(body, indent=2, ensure_ascii=False))
+    discount_code_value = body.get("discount_code")
+    discount_code_id = body.get("discount_code_id")
     if not body:
         return jsonify({"error": "Missing request body"}), 400
 
@@ -128,16 +129,22 @@ def create_order_route():
             "subtotal": subtotal,
             "discount": discount,
             "total": total,
-            "expires_at": expires_at.isoformat(),
+            # "expires_at": expires_at.isoformat(),
+            "discount_code_id": discount_code_id,  # ✅ lưu vào Directus
+            "discount_code": discount_code_value,  # ✅ lưu vào Directus
         })
 
-        order = create_order(body)
+        order = create_order(body)  
         order_id = order["id"]
         order["expires_at"] = expires_at.isoformat()
 
         created_items = []
+
         for item in order_items:
             item["merch_order_id"] = order_id
+            print("=== ITEM BEFORE CREATE ===")
+            print(item)
+            print("==========================")
             created_items.append(create_order_item(item))
         order["order_items"] = created_items
 

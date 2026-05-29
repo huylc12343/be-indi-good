@@ -3,7 +3,7 @@ from datetime import datetime
 import requests
 from dotenv import load_dotenv
 from fastapi import HTTPException
-
+import json
 load_dotenv()
 
 DIRECTUS_URL = os.getenv("DIRECTUS_URL")
@@ -19,10 +19,14 @@ DIRECTUS_HEADERS = {
 
 
 def create_order(payload: dict):
+    print("=== CREATE ITEM PAYLOAD ===")
+    print(json.dumps(payload, indent=2, ensure_ascii=False))
+
+    print("===========================")
     payload["order_id"] = "DH" + str(datetime.now().timestamp()).split(".")[0][-6:]
     payload["payos_order_code"] = payload["order_id"]
     payload["order_code"] = payload["order_code"]
-    
+    payload["created_at"] = datetime.now().isoformat()
     res = requests.post(
         f"{DIRECTUS_URL}/items/merch_orders",
         headers=DIRECTUS_HEADERS,
@@ -30,6 +34,9 @@ def create_order(payload: dict):
     )
     print("CREATE ORDER STATUS:", res.status_code)
     print("CREATE ORDER RESPONSE:", res.text)
+    print("CREATE ORDER PAYLOAD final:")
+    print(json.dumps(payload, indent=2, ensure_ascii=False))
+    
     res.raise_for_status()
     if res.status_code not in [200, 201]:
         raise HTTPException(status_code=500, detail=res.text)
