@@ -338,6 +338,21 @@ def _cancel_expire_job(order_id: str):
         redis_conn.delete(job_id_key)
 from flask import send_from_directory
 
+import requests
+from flask import Response
+@app.route("/assets/<asset_id>")
+def proxy_asset(asset_id):
+    url = f"{os.getenv('DIRECTUS_URL')}"
+    directus_url = f"{url}/assets/{asset_id}"  # internal Docker network
+
+    resp = requests.get(directus_url, stream=True)
+    
+    return Response(
+        resp.iter_content(chunk_size=8192),
+        status=resp.status_code,
+        content_type=resp.headers.get("Content-Type", "application/octet-stream"),
+    )
+
 @app.route('/img/<path:filename>')
 def serve_images(filename):
     return send_from_directory('static/img', filename)

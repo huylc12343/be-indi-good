@@ -23,7 +23,7 @@ def create_order(payload: dict):
     print(json.dumps(payload, indent=2, ensure_ascii=False))
 
     print("===========================")
-    payload["order_id"] = "DH" + str(datetime.now().timestamp()).split(".")[0][-6:]
+    payload["order_id"] = "DHM" + str(datetime.now().timestamp()).split(".")[0][-6:]
     payload["payos_order_code"] = payload["order_id"]
     payload["order_code"] = payload["order_code"]
     payload["created_at"] = datetime.now().isoformat()

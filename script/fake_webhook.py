@@ -29,7 +29,7 @@ def generate_signature(data: dict) -> str:
 def fake_webhook():
     data = {
         "accountNumber": "123456789",
-        "amount": 110400,
+        "amount": 28800,
         "description": "TEST ORDER",
         "reference": "test-ref",
         "transactionDateTime": "2026-05-23 10:00:00",
@@ -37,7 +37,7 @@ def fake_webhook():
         "counterAccountName": "TEST USER",
         "counterAccountNumber": "123456",
         "currency": "VND",
-        "orderCode": 17614550,
+        "orderCode": 58504176,
         "paymentLinkId": "test-payment-link"
     }
 
