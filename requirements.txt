@@ -11,5 +11,5 @@ weasyprint==68.1
 gevent==26.4.0
 gevent-websocket==0.10.1
 Flask-Limiter[redis]==4.1.1
-httpx==0.34.0
-redis==5.0.0
+httpx
+redis
