@@ -343,9 +343,11 @@ from flask import Response
 @app.route("/assets/<asset_id>")
 def proxy_asset(asset_id):
     url = f"{os.getenv('DIRECTUS_URL')}"
-    directus_url = f"{url}/assets/{asset_id}"  # internal Docker network
+    token = os.getenv("DIRECTUS_TOKEN")
 
-    resp = requests.get(directus_url, stream=True)
+    directus_url = f"{url}/assets/{asset_id}"  # internal Docker network
+    headers = {"Authorization": f"Bearer {token}"}
+    resp = requests.get(directus_url,headers=headers, stream=True)
     
     return Response(
         resp.iter_content(chunk_size=8192),
