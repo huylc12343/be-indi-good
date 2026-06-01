@@ -71,6 +71,6 @@ def calculate_shipping_fee(address: str, total_price: float) -> dict:
             result[0],
         )
 
-        fee = stk.get("GIA_CUOC")
-
+        # fee = stk.get("GIA_CUOC")
+        fee = 30000
         return {"shipping_fee": fee}
