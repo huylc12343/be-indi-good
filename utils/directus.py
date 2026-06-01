@@ -28,7 +28,7 @@ def create_order(payload: dict):
     payload["order_code"] = payload["order_code"]
     payload["created_at"] = datetime.now().isoformat()
     res = requests.post(
-        f"{DIRECTUS_URL}/items/merch_orders",
+        f"{DIRECTUS_URL}/items/Merch_orders",
         headers=DIRECTUS_HEADERS,
         json=payload,
     )
@@ -82,7 +82,7 @@ def get_products_by_ids(merch_ids: list):
     return {item["id"]: item for item in data}
 def get_order(order_id: str):
     res = requests.get(
-        f"{DIRECTUS_URL}/items/merch_orders/{order_id}",
+        f"{DIRECTUS_URL}/items/Merch_orders/{order_id}",
         headers=DIRECTUS_HEADERS,
         params={"fields[]": ["*", "merch_order_items.*"]},
     )
@@ -92,7 +92,7 @@ def get_order(order_id: str):
 
 def get_order_by_code(order_code: str):
     res = requests.get(
-        f"{DIRECTUS_URL}/items/merch_orders",
+        f"{DIRECTUS_URL}/items/Merch_orders",
         headers=DIRECTUS_HEADERS,
         params={
             "filter[order_code][_eq]": order_code,
@@ -110,7 +110,7 @@ def get_order_by_code(order_code: str):
 
 def update_order_status(order_id: str, status: str):
     res = requests.patch(
-        f"{DIRECTUS_URL}/items/merch_orders/{order_id}",
+        f"{DIRECTUS_URL}/items/Merch_orders/{order_id}",
         headers=DIRECTUS_HEADERS,
         json={"status": status},
     )
@@ -141,7 +141,7 @@ def get_discount_code_by_code(code: str):
 
 def get_order_by_payos_code(order_code: int):
     res = requests.get(
-        f"{DIRECTUS_URL}/items/merch_orders",
+        f"{DIRECTUS_URL}/items/Merch_orders",
         headers=DIRECTUS_HEADERS,
         params={
             "filter[payos_order_code][_eq]": order_code,
