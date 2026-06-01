@@ -21,7 +21,7 @@ DIRECTUS_HEADERS = {
 def create_order(payload: dict):
     print("=== CREATE ITEM PAYLOAD ===")
     print(json.dumps(payload, indent=2, ensure_ascii=False))
-
+    
     print("===========================")
     payload["order_id"] = "DHM" + str(datetime.now().timestamp()).split(".")[0][-6:]
     payload["payos_order_code"] = payload["order_id"]
@@ -122,7 +122,7 @@ def cancel_order(order_id: str):
 
 
 def get_discount_code_by_code(code: str):
-    code = code.strip().lower()
+    code = code.strip().upper()
     res = requests.get(
         f"{DIRECTUS_URL}/items/discount_codes",
         headers=DIRECTUS_HEADERS,
