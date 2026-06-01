@@ -242,11 +242,11 @@ def payos_webhook():
         # =========================
         order = get_order_by_code(order_code)
 
-        # 🔥 fallback nếu không tìm thấy
+ # 🔥 fallback nếu không tìm thấy
 
         if not order:
             print("❌ Order not found")
-            return jsonify({"error": "Order not found"}), 404
+            return jsonify({"error": "Order not found"}), 200
 
         print("✅ FOUND ORDER:", order["id"])
 
