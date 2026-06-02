@@ -13,7 +13,7 @@ from utils.viettel import calculate_shipping_fee
 from utils.config import FLASK_DEBUG, REDIS_URL, ORDER_EXPIRE_SECONDS, CORS_ORIGINS
 from utils.directus import (
     create_order, create_order_item, get_order, get_order_by_code,
-    update_order_status, cancel_order, get_discount_code_by_code,
+    update_order_status, cancel_order, get_discount_code_by_code,increate_discount_code_usage
 )
 from utils.payos import verify_webhook_signature, create_payos_payment
 from utils.validate import validate_order
@@ -280,7 +280,8 @@ def payos_webhook():
         # update DB
         update_order_status(order_id, "done")
         order["status"] = "done"
-
+        print("discount_code_id:",order.get("discount_code_id"))
+        increate_discount_code_usage(order.get("discount_code_id"))
         print(f"🎉 ORDER {order_id} UPDATED TO PAID")
 
         # =========================

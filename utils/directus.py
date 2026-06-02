@@ -138,7 +138,38 @@ def get_discount_code_by_code(code: str):
     data = res.json().get("data", [])
     return data[0] if data else None
 
+def get_discount_code_by_id(code_id: str):
+    res = requests.get(
+        f"{DIRECTUS_URL}/items/discount_codes/{code_id}",
+        headers=DIRECTUS_HEADERS,
+    )
+    res.raise_for_status()
+    return res.json().get("data")
 
+def increate_discount_code_usage(code: str):
+    print(f"Incrementing usage for discount code {code}")
+
+    # 🔥 Lấy theo code
+    data = get_discount_code_by_code(code)
+    if not data:
+        print("❌ Discount code not found")
+        return
+
+    discount_id = data["id"]  # ✅ lấy ID thật
+
+    used_count = data.get("used_count", 0) or 0
+    used_count += 1
+
+    res = requests.patch(
+        f"{DIRECTUS_URL}/items/discount_codes/{discount_id}",  # ✅ FIX
+        headers=DIRECTUS_HEADERS,
+        json={"used_count": used_count},
+    )
+
+    print("PATCH STATUS:", res.status_code)
+    print("PATCH RESPONSE:", res.text)
+
+    res.raise_for_status()
 def get_order_by_payos_code(order_code: int):
     res = requests.get(
         f"{DIRECTUS_URL}/items/Merch_orders",
