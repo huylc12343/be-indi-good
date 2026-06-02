@@ -132,7 +132,7 @@ def send_order_email(order_id: str):
     }
 
     res = requests.get(
-        f"{DIRECTUS_URL}/items/merch_orders/{order_id}",
+        f"{DIRECTUS_URL}/items/Merch_orders/{order_id}",
         headers=headers,
         params={"fields": "*, order_items.*"},  # ← đổi merch_order_items → order_items
     )
