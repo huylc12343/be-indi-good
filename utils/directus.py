@@ -72,7 +72,7 @@ def get_products_by_ids(merch_ids: list):
         return {}
 
     res = requests.get(
-        f"{DIRECTUS_URL}/items/merch",
+        f"{DIRECTUS_URL}/items/merchs",
         headers=DIRECTUS_HEADERS,
         params={
             "filter[id][_in]": ",".join(map(str, merch_ids)),
