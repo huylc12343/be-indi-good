@@ -4,6 +4,8 @@ import requests
 from dotenv import load_dotenv
 from fastapi import HTTPException
 import json
+from datetime import datetime, timezone, timedelta
+
 load_dotenv()
 
 DIRECTUS_URL = os.getenv("DIRECTUS_URL")
@@ -26,11 +28,10 @@ def create_order(payload: dict):
     payload["order_id"] = "DHM" + str(datetime.now().timestamp()).split(".")[0][-6:]
     payload["payos_order_code"] = payload["order_id"]
     payload["order_code"] = payload["order_code"]
-    from datetime import datetime, timezone, timedelta
 
     vn_tz = timezone(timedelta(hours=7))
  
-    payload["created_at"] = datetime.now().isoformat()
+    payload["created_at"] = datetime.now(vn_tz).isoformat()
     res = requests.post(
         f"{DIRECTUS_URL}/items/Merch_orders",
         headers=DIRECTUS_HEADERS,
