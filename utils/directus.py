@@ -26,6 +26,10 @@ def create_order(payload: dict):
     payload["order_id"] = "DHM" + str(datetime.now().timestamp()).split(".")[0][-6:]
     payload["payos_order_code"] = payload["order_id"]
     payload["order_code"] = payload["order_code"]
+    from datetime import datetime, timezone, timedelta
+
+    vn_tz = timezone(timedelta(hours=7))
+ 
     payload["created_at"] = datetime.now().isoformat()
     res = requests.post(
         f"{DIRECTUS_URL}/items/Merch_orders",
@@ -147,6 +151,10 @@ def get_discount_code_by_id(code_id: str):
     return res.json().get("data")
 
 def increate_discount_code_usage(code: str):
+    if not code:
+        print("❌ No discount code provided")
+        return
+    
     print(f"Incrementing usage for discount code {code}")
 
     # 🔥 Lấy theo code
