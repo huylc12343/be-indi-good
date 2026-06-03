@@ -53,14 +53,14 @@ redis_conn = Redis.from_url(REDIS_URL)
 q = Queue(connection=redis_conn)
 
 
-def handle_order_breach(request_limit: RequestLimit):
-    ip = get_real_ip()
-    try:
-        if not redis_conn.exists(f"blocked:{ip}"):
-            redis_conn.setex(f"blocked:{ip}", 12 * 3600, 1)
-            logger.warning(f"IP {ip} blocked for 12 hours due to repeated order attempts")
-    except Exception as e:
-        logger.error(f"Failed to block IP {ip}: {e}")
+# def handle_order_breach(request_limit: RequestLimit):
+#     ip = get_real_ip()
+#     try:
+#         if not redis_conn.exists(f"blocked:{ip}"):
+#             redis_conn.setex(f"blocked:{ip}", 12 * 3600, 1)
+#             logger.warning(f"IP {ip} blocked for 12 hours due to repeated order attempts")
+#     except Exception as e:
+#         logger.error(f"Failed to block IP {ip}: {e}")
 
 
 socketio = SocketIO(
