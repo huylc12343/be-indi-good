@@ -18,7 +18,7 @@ from utils.directus import (
 from utils.payos import verify_webhook_signature, create_payos_payment
 from utils.validate import validate_order
 from jobs.expire_order import expire_order
-from flask_limiter import Limiter, RequestLimit
+# from flask_limiter import Limiter, RequestLimit
 
 import logging
 logging.basicConfig(level=logging.INFO)
@@ -42,12 +42,12 @@ def get_real_ip():
     return request.headers.get("X-Real-IP") or request.remote_addr
 
 
-limiter = Limiter(
-    app=app,
-    key_func=get_real_ip,
-    storage_uri=REDIS_URL,
-    default_limits=[],
-)
+# limiter = Limiter(
+#     app=app,
+#     key_func=get_real_ip,
+#     storage_uri=REDIS_URL,
+#     default_limits=[],
+# )
 
 redis_conn = Redis.from_url(REDIS_URL)
 q = Queue(connection=redis_conn)
@@ -77,10 +77,10 @@ def health():
 
 
 @app.route("/orders", methods=["POST"])
-@limiter.limit("5 per minute", on_breach=handle_order_breach)
+# @limiter.limit("5 per minute", on_breach=handle_order_breach)
 def create_order_route():
-    if redis_conn.get(f"blocked:{get_real_ip()}"):
-        return jsonify({"error": "Too many requests"}), 429
+    # if redis_conn.get(f"blocked:{get_real_ip()}"):
+    #     return jsonify({"error": "Too many requests"}), 429
 
     body = request.get_json()
     print(json.dumps(body, indent=2, ensure_ascii=False))
