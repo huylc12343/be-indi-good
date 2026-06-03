@@ -4,7 +4,9 @@ import requests
 from dotenv import load_dotenv
 from fastapi import HTTPException
 import json
-from datetime import datetime, timezone, timedelta
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
 
 load_dotenv()
 
@@ -29,9 +31,8 @@ def create_order(payload: dict):
     payload["payos_order_code"] = payload["order_id"]
     payload["order_code"] = payload["order_code"]
 
-    vn_tz = timezone(timedelta(hours=7))
  
-    payload["created_at"] = datetime.now(vn_tz).isoformat()
+    payload["created_at"] = datetime.now(ZoneInfo("Asia/Ho_Chi_Minh")).isoformat()
     res = requests.post(
         f"{DIRECTUS_URL}/items/Merch_orders",
         headers=DIRECTUS_HEADERS,
