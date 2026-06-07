@@ -1,6 +1,8 @@
 # jobs/send_order_email.py
-
+import os
 import logging
+import base64
+
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -16,11 +18,17 @@ from utils.config import (
 logger = logging.getLogger(__name__)
 
 
+# FONT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "fonts")
+# RETROGUARD_PATH = os.path.join(FONT_DIR, "1FTV-Retroguard.otf")
 def _format_currency(amount) -> str:
     try:
         return f"{int(float(amount)):,}".replace(",", ".") + "đ"
     except:
         return "0đ"
+# def _get_retroguard_base64() -> str:
+#     """Đọc font Retroguard rồi encode base64 để nhúng vào CSS @font-face."""
+#     with open(RETROGUARD_PATH, "rb") as f:
+#         return base64.b64encode(f.read()).decode("utf-8")
 
 def _build_order_items_html(order_items: list, products_map: dict) -> str:
     rows = ""
@@ -61,7 +69,15 @@ def _build_order_items_html(order_items: list, products_map: dict) -> str:
 
 def _build_email_html(order: dict) -> str:
     from utils.directus import get_products_by_ids
-
+    # retroguard_b64 = _get_retroguard_base64()
+    # font_face_css = f"""
+    #     @font-face {{
+    #         font-family: 'Retroguard';
+    #         src: url('data:font/opentype;base64,{retroguard_b64}') format('opentype');
+    #         font-weight: 400;
+    #         font-style: normal;
+    #     }}
+    #     """
     customer_name = order.get("customer_name", "")
     customer_email = order.get("customer_email", "")
     customer_phone = order.get("customer_phone", "")
@@ -100,7 +116,7 @@ def _build_email_html(order: dict) -> str:
         template = Template(f.read())
 
     return template.safe_substitute(
-        BASE_URL=IMG_EMAIL_URL,
+        BASE_URL=IMG_EMAIL_URL,     
         customer_name=customer_name,
         customer_email=customer_email,
         customer_phone=customer_phone,
@@ -120,7 +136,7 @@ def _format_shipping_method(method: str) -> str:
     if method == "shipping":
         return "Giao hàng tận nơi"
     elif method == "pickup":
-        return "Nhận tại sự kiện/ nhận tại bụi rock"
+        return "Nhận tại sự kiện/ nhận tại Bụi Rock"
     return "Không xác định"
 def send_order_email(order_id: str):
     import requests
