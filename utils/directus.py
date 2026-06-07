@@ -134,7 +134,7 @@ def get_discount_code_by_code(code: str):
         headers=DIRECTUS_HEADERS,
         params={
             "filter[code][_eq]": code,
-            "filter[status][_eq]": "available",
+            "filter[status][_eq]": "active",
             "fields": "*",
         },
     )
